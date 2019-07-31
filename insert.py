@@ -22,9 +22,13 @@ def insert(db,sql):
       cursor.execute(sql)
       # 提交到数据库执行
       print(db.commit())
+
+      print("insert OK")
    except:
       print(sql)
-      write('./error.sql',sql)
+      if(sql!="\n"):
+          write('./error.sql', sql)
+
       # 如果发生错误则回滚
       db.rollback()
 

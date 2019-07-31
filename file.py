@@ -70,13 +70,14 @@ def anaFile(inPath,outPath):
         # print(type(line))
         # line = line.strip('\n')
         # outFile.write(line)
+        # print(line)
 
         if (flag == 0):
             line = line.strip()
             flag+=1
         else:
             if (line[0:6][2:5]=='_id'):
-                line = line.strip()
+                line = line.replace("\n","")
                 line = ',' + line
                 # print('------------')
             # print(line[0:6][2:5])
@@ -85,16 +86,16 @@ def anaFile(inPath,outPath):
     end = time.time()
     print("耗时:", end - start)
 
-
-# anaFile("/home/jingbao/桌面/功能饮料.json",None)
+#
+# anaFile("/home/jingbao/桌面/result/功能饮料.json","/home/jingbao/桌面/功能饮料1.json")
 # anaFile(None,None)
 
 
-
+#
 # files = os.listdir('/home/jingbao/桌面/result')
 # for fileName in files:
 #     anaFile("/home/jingbao/桌面/result/"+fileName, "/home/jingbao/桌面/temp/"+fileName)
-
+# #
 
 
 

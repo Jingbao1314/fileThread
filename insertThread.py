@@ -21,8 +21,7 @@ class Reader(threading.Thread):
             print('sql---run')
             rlock.acquire()
             startPosition = curPosition  # 每次更新起始位置
-            if (
-                        startPosition + self.res.fileSize / 2) < self.res.fileSize:  # 这里，例如开了10个线程，就将文件分为10块，每个线程负责一块
+            if (startPosition + self.res.fileSize / 2) < self.res.fileSize:  # 这里，例如开了10个线程，就将文件分为10块，每个线程负责一块
                 curPosition = endPosition = (startPosition + self.res.fileSize / 2)
             else:
                 curPosition = endPosition = self.res.fileSize
@@ -38,16 +37,22 @@ class Reader(threading.Thread):
             while pos <= endPosition:
                 line = fstream.readline()
                 # print(line)
-                if (('t_oem_taobao_sku_comments' in line)):
-                    insert(db, line)
-                    print("t_oem_taobao_sku_comments")
-
-                # if (('comments' in line)|('options' in line)):
-                #     print('insert')
-                #     # 关闭数据库连接
+                # if (('t_oem_taobao_sku_comments' in line)):
                 #     insert(db, line)
+                #     # print("t_oem_taobao_sku_comments")
+                #
+                #
+                # if (('t_oem_taobao_sku_options' in line)):
+                #     insert(db, line)
+                    # print("t_oem_taobao_sku_comments")
+
+                insert(db, line)
+                # if (('t_oem_taobao_sku_comments' in line)|('t_oem_taobao_sku_options' in line)):
+                #    print("")
+                #     # 关闭数据库连接
+                #     # insert(db, line)
                 # else:
-                #     print('insert sku')
+                #     insert(db, line)
 
 
                 '''
@@ -97,6 +102,7 @@ def insertThread(fileName):
         threads.append(rdr)
     # 开始线程
     for i in range(threadNum):
+        curPosition=0
         threads[i].start()
     # 结束线程
     for i in range(threadNum):

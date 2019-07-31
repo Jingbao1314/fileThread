@@ -2,9 +2,16 @@ import time,asyncio,random
 
 import os
 
+from insert import connection, insert
 from insertThread import insertThread
-from test import ana
+from test import test, ana
 from file import temp,clearAll
+
+db = connection()
+
+def insertTemp():
+    for line in open("./temp_goods"):
+        insert(db, line)
 
 def runAna(fileName):
     print('runAna')
@@ -18,7 +25,7 @@ def runAna(fileName):
     #             fileSize = os.path.getsize(master_name)
     #         else:
     #             break
-    ana(fileName)
+    test(fileName)
     temp()
     # return asyncio.sleep(1)
 
@@ -26,10 +33,12 @@ def runAna(fileName):
     # clearAll()
 def runInsert():
     sql_name = ['./temp_reviewsAndComments','./temp_assist', './temp_goods']
+    # sql_name = ['./temp_goods']
     for master_name in sql_name:
         fileSize = os.path.getsize(master_name)
         if (fileSize != 0):
-            insertThread(master_name)
+            insertTemp()
+            # insertThread(master_name)
     clearAll()
     # return asyncio.sleep(1)
 
@@ -50,7 +59,7 @@ def write(dirName):
 
 
 def main():
-    write('/home/jingbao/桌面/temp/')
+    write('/home/jingbao/桌面/result/')
 
 if __name__ == '__main__':
     main()

@@ -9,20 +9,21 @@ from mapping import  comMapping
 def anaComAndReviews(skuid,c_list,r_list):
     sql=''
     res=False
-    for index in range(len(c_list)):
-        # c_json=json.loads(c_list[index])
-        # r_json=json.loads(r_list[index])
-        c_json=c_list[index]
-        if index==0:
-            sql=sql+ana_cloum(c_json)
-        if index==len(c_list)-1:
-            # if(r_list==None):
-            #     sql = sql + ana_values(c_json,1) + ';'
-            # else:
-            #     sql = sql + ana_values(c_json,1) + ','
-            sql = sql + ana_values(c_json, skuid,1) + ';'
-        else:
-            sql = sql + ana_values(c_json,skuid,1) + ','
+    if(c_list!=None):
+        for index in range(len(c_list)):
+            # c_json=json.loads(c_list[index])
+            # r_json=json.loads(r_list[index])
+            c_json = c_list[index]
+            if index == 0:
+                sql = sql + ana_cloum(c_json)
+            if index == len(c_list) - 1:
+                # if(r_list==None):
+                #     sql = sql + ana_values(c_json,1) + ';'
+                # else:
+                #     sql = sql + ana_values(c_json,1) + ','
+                sql = sql + ana_values(c_json, skuid, 1) + ';'
+            else:
+                sql = sql + ana_values(c_json, skuid, 1) + ','
 
     res=file.write("./reviewsAndComments", sql)
     sql=''
